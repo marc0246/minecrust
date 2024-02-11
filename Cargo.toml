@@ -1,0 +1,21 @@
+[workspace]
+resolver = "2"
+
+[workspace.lints.rust]
+rust_2018_idioms = "warn"
+rust_2021_compatibility = "warn"
+
+[workspace.lints.clippy]
+pedantic = "warn"
+enum_glob_use = "allow"
+items_after_statements = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+strip = "symbols"
+lto = "thin"
+codegen-units = 1
