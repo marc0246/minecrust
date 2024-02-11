@@ -3,9 +3,14 @@ resolver = "2"
 
 [workspace.dependencies]
 anyhow = "1.0"
+byteorder = "1.5"
 enum-map = "2.7"
+flate2 = "1.0"
+glam = "0.25"
+log = "0.4"
 phf = { version = "0.11", features = ["macros"] }
 quartz_nbt = "0.2"
+rustc-hash = "1.1"
 serde = "1.0"
 strum = { version = "0.26", features = ["derive"] }
 
