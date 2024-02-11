@@ -2,6 +2,10 @@
 resolver = "2"
 
 [workspace.dependencies]
+anyhow = "1.0"
+enum-map = "2.7"
+phf = { version = "0.11", features = ["macros"] }
+quartz_nbt = "0.2"
 serde = "1.0"
 strum = { version = "0.26", features = ["derive"] }
 
