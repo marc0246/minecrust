@@ -1,0 +1,13 @@
+[package]
+name = "world-resource"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+serde = { workspace = true }
+
+[lints]
+workspace = true
