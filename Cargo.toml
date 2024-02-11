@@ -3,6 +3,7 @@ resolver = "2"
 
 [workspace.dependencies]
 serde = "1.0"
+strum = { version = "0.26", features = ["derive"] }
 
 [workspace.lints.rust]
 rust_2018_idioms = "warn"

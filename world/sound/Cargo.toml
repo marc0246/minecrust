@@ -1,0 +1,13 @@
+[package]
+name = "world-sound"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+strum = { workspace = true }
+
+[lints]
+workspace = true
