@@ -8,10 +8,16 @@ name = "minecrust"
 path = "main.rs"
 
 [dependencies]
+anyhow = { workspace = true }
+bytes = { workspace = true }
+chrono = { workspace = true }
 directories = { workspace = true }
+futures-util = { workspace = true }
 home = { workspace = true }
 log = { workspace = true }
 serde = { workspace = true }
+tokio = { workspace = true }
+tokio-util = { workspace = true }
 
 [lints]
 workspace = true
