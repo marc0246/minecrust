@@ -1,0 +1,17 @@
+[package]
+name = "minecrust"
+version = "0.0.0"
+edition = "2021"
+
+[[bin]]
+name = "minecrust"
+path = "main.rs"
+
+[dependencies]
+directories = { workspace = true }
+home = { workspace = true }
+log = { workspace = true }
+serde = { workspace = true }
+
+[lints]
+workspace = true
