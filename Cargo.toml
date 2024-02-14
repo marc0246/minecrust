@@ -4,21 +4,31 @@ resolver = "2"
 
 [workspace.dependencies]
 anyhow = "1.0"
+arrayvec = "0.7"
+bumpalo = "3.14"
 bytes = "1.5"
+bytemuck = "1.14"
 byteorder = "1.5"
 chrono = "0.4"
 directories = "5.0"
 enum-map = "2.7"
 flate2 = "1.0"
-glam = "0.25"
 futures-util = { version = "0.3", features = ["sink"] }
+glam = { version = "0.25", features = ["bytemuck"] }
 home = "0.5"
+indexmap = "2.2"
 log = "0.4"
 phf = { version = "0.11", features = ["macros"] }
+png = "0.17"
 quartz_nbt = "0.2"
 rustc-hash = "1.1"
 serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_state = "0.4"
+serde_derive_state = "0.4"
+serde_with = "3.6"
 strum = { version = "0.26", features = ["derive"] }
+sync_file = "0.2"
 tokio = { version = "1.36", features = [
     "rt-multi-thread",
     "sync",
@@ -27,6 +37,7 @@ tokio = { version = "1.36", features = [
     "parking_lot",
 ] }
 tokio-util = { version = "0.7", features = ["codec"] }
+zip = { version = "0.6", features = ["deflate"], default-features = false }
 
 [workspace.lints.rust]
 rust_2018_idioms = "warn"

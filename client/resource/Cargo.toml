@@ -1,0 +1,31 @@
+[package]
+name = "client-resource"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+arrayvec = { workspace = true }
+bumpalo = { workspace = true }
+bytemuck = { workspace = true }
+enum-map = { workspace = true }
+glam = { workspace = true }
+indexmap = { workspace = true }
+png = { workspace = true }
+rustc-hash = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_state = { workspace = true }
+serde_derive_state = { workspace = true }
+serde_with = { workspace = true }
+strum = { workspace = true }
+sync_file = { workspace = true }
+zip = { workspace = true }
+
+world = { path = "../../world" }
+
+[lints]
+workspace = true

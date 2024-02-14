@@ -1,6 +1,7 @@
 #![feature(thread_id_value, type_alias_impl_trait)]
 
 use anyhow::Context;
+use client_resource as resource;
 use tokio::runtime::Runtime;
 
 use self::env::Env;

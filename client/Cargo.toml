@@ -19,5 +19,7 @@ serde = { workspace = true }
 tokio = { workspace = true }
 tokio-util = { workspace = true }
 
+client-resource = { path = "resource" }
+
 [lints]
 workspace = true
