@@ -1,3 +1,5 @@
+#![allow(clippy::identity_op)]
+
 use anyhow::{ensure, Result};
 use png::{BitDepth, ColorType};
 

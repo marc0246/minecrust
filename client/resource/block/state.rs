@@ -325,9 +325,9 @@ impl<'de> Visitor<'de> for OrSeed<'_> {
     {
         while let Some(()) = seq.next_element_seed(PropertyNameValueSeed {
             property_name_seed: self.property_name_seed,
-            scratch: &mut self.scratch,
+            scratch: self.scratch,
         })? {
-            generate_combinations(&mut self.bitfield, &self.scratch);
+            generate_combinations(&mut self.bitfield, self.scratch);
         }
 
         Ok(PartPredicate {
@@ -408,41 +408,38 @@ impl<'de> Visitor<'de> for PropertyValueSeed<'_> {
         Ok(())
     }
 
-    fn visit_bool<E>(mut self, b: bool) -> Result<Self::Value, E>
+    fn visit_bool<E>(self, b: bool) -> Result<Self::Value, E>
     where
         E: de::Error,
     {
         if self.property_definition.id.ty() == state::PropertyType::Boolean {
-            let value = match b {
-                false => "false",
-                true => "true",
-            };
+            let value = if b { "true" } else { "false" };
 
-            add_property(self.property_definition, value, &mut self.scratch)
+            add_property(self.property_definition, value, self.scratch)
         } else {
             Err(de::Error::invalid_type(Unexpected::Bool(b), &self))
         }
     }
 
-    fn visit_u64<E>(mut self, n: u64) -> Result<Self::Value, E>
+    fn visit_u64<E>(self, n: u64) -> Result<Self::Value, E>
     where
         E: de::Error,
     {
         if self.property_definition.id.ty() == state::PropertyType::Integer {
             let value = n.to_string();
 
-            add_property(self.property_definition, &value, &mut self.scratch)
+            add_property(self.property_definition, &value, self.scratch)
         } else {
             Err(de::Error::invalid_type(Unexpected::Unsigned(n), &self))
         }
     }
 
-    fn visit_str<E>(mut self, s: &str) -> Result<Self::Value, E>
+    fn visit_str<E>(self, s: &str) -> Result<Self::Value, E>
     where
         E: de::Error,
     {
         for value in s.split('|') {
-            add_property(self.property_definition, value, &mut self.scratch)?;
+            add_property(self.property_definition, value, self.scratch)?;
         }
 
         Ok(())

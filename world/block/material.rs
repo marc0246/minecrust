@@ -254,6 +254,7 @@ impl Material {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 /// Colors used for blocks displayed in a map.
+#[allow(clippy::enum_variant_names)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Color {
     None,

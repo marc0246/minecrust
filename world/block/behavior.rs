@@ -1,6 +1,7 @@
 use crate::material::{Color, Material};
 use crate::sound;
 
+#[allow(clippy::struct_excessive_bools)] // This is, in fact, not a state machine.
 #[derive(Debug)]
 pub struct Properties {
     pub material: Material,
