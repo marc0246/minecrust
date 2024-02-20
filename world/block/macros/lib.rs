@@ -28,17 +28,6 @@ pub fn blocks(input: TokenStream) -> TokenStream {
     let screaming_ident = ident1
         .clone()
         .map(|ident| Ident::new(&ident.to_string().to_shouty_snake_case(), Span::call_site()));
-    let property_index_from_name = items.clone().map(|ItemStruct { fields, .. }| {
-        let property_name = fields.iter().map(property_name);
-        let index = 0..fields.len();
-
-        quote! {
-            |property_name| match property_name {
-                #(#property_name => Some(#index),)*
-                _ => None,
-            }
-        }
-    });
     let property_names = items.clone().map(|ItemStruct { fields, .. }| {
         let property_name = fields.iter().map(property_name);
 
@@ -134,19 +123,6 @@ pub fn blocks(input: TokenStream) -> TokenStream {
                 ];
 
                 &LUT[self as usize]
-            }
-
-            /// Returns a function that converts the block's property names to their corresponding
-            /// [`PropertyId`]s.
-            ///
-            /// [`PropertyId`]: state::PropertyId
-            #[must_use]
-            pub const fn state_property_index_from_name(self) -> fn(&str) -> Option<usize> {
-                const LUT: [fn(&str) -> Option<usize>; BlockId::COUNT] = [
-                    #(#property_index_from_name,)*
-                ];
-
-                LUT[self as usize]
             }
         }
     }

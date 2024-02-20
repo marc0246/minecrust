@@ -61,7 +61,7 @@ impl<'de: 'arena, 'arena> Visitor<'de> for VariantPredicateSeed<'_, 'arena> {
 
         let block_id = self.state.block_id;
         let state_definition = block_id.state_definition();
-        let state_property_index_from_name = block_id.state_property_index_from_name();
+        let property_name_seed = PropertyNameSeed { state_definition };
 
         let mut block_state_mask = 0;
         let mut block_state = 0;
@@ -72,12 +72,7 @@ impl<'de: 'arena, 'arena> Visitor<'de> for VariantPredicateSeed<'_, 'arena> {
                     "invalid key-value pair `{name_value}`, expected to find an `=`",
                 )));
             };
-            let Some(property_index) = state_property_index_from_name(name) else {
-                return Err(de::Error::unknown_field(
-                    name,
-                    state_definition.property_names,
-                ));
-            };
+            let property_index = property_name_seed.visit_str(name)?;
             let state::PropertyDefinition { id, offset, .. } =
                 state_definition.properties[property_index];
             let property = id.deserialize(value.into_deserializer())?;
@@ -141,10 +136,7 @@ impl<'de: 'arena, 'arena> Visitor<'de> for PartPredicateVisitor<'_, 'arena> {
     {
         let block_id = self.state.block_id;
         let state_definition = block_id.state_definition();
-        let property_name_seed = PropertyNameSeed {
-            state_definition,
-            state_property_index_from_name: block_id.state_property_index_from_name(),
-        };
+        let property_name_seed = PropertyNameSeed { state_definition };
         let last_property_definition = state_definition.properties.last().unwrap();
         let bits = last_property_definition.offset + last_property_definition.id.bits() - u16::BITS;
         let words = ((1 << bits) - 1) / u64::BITS + 1;
@@ -265,7 +257,6 @@ impl<'de> Visitor<'de> for FieldSeed {
 #[derive(Clone, Copy)]
 struct PropertyNameSeed {
     state_definition: &'static state::Definition,
-    state_property_index_from_name: fn(&str) -> Option<usize>,
 }
 
 impl<'de> DeserializeSeed<'de> for PropertyNameSeed {
@@ -290,8 +281,16 @@ impl<'de> Visitor<'de> for PropertyNameSeed {
     where
         E: de::Error,
     {
-        (self.state_property_index_from_name)(s)
-            .ok_or_else(|| de::Error::unknown_field(s, self.state_definition.property_names))
+        for (index, &name) in self.state_definition.property_names.iter().enumerate() {
+            if s == name {
+                return Ok(index);
+            }
+        }
+
+        Err(de::Error::unknown_field(
+            s,
+            self.state_definition.property_names,
+        ))
     }
 }
 
